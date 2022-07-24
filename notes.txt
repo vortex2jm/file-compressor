@@ -1,0 +1,7 @@
+- Criar um TAD de lista ordenada
+- Criar um TAD de árvore
+- Criar uma tabela de codifiação
+- Criar um codificador
+- Criar um decodificador
+- Criar um compactador
+- Criar um descompactador
