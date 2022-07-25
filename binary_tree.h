@@ -5,7 +5,7 @@ typedef struct tree Tree;
 
 Tree *CreateVoidTree();
 
-Tree *CreateLeafNode(Tree *left, Tree *right, int weight, char character);
+Tree *CreateLeafNode(Tree *left, Tree *right, int weight, unsigned char character);
 
 Tree *CreateInternalNode(Tree *left, Tree *right, int weight);
 

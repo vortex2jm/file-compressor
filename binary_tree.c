@@ -5,14 +5,14 @@
 struct tree {
 
   int weight;
-  char character;
+  unsigned char character;
   Tree *left;
   Tree *right;
 };
 
 Tree *CreateVoidTree() { return NULL; }
 
-Tree *CreateLeafNode(Tree *left, Tree *right, int weight, char character) {
+Tree *CreateLeafNode(Tree *left, Tree *right, int weight, unsigned char character) {
 
   Tree *tree = malloc(sizeof(Tree));
   tree->left = left;
@@ -45,4 +45,7 @@ int TreeHeight(Tree *tree) {
     return 1 + TreeHeight(tree->right);
 }
 
-int TreeWeight(Tree *tree) { return tree->weight; }
+int TreeWeight(Tree *tree) {
+  if(!tree) return -1;    
+  return tree->weight;
+}
