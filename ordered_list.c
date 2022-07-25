@@ -28,7 +28,7 @@ List *CreateVoidList() {
 
 List *ListPush(List *list, Tree *tree) {
 
-  Cell *current = list->first;
+  Cell *current = list->first, *previous = NULL;
   Cell *newCell = malloc(sizeof(Cell));
   newCell->tree = tree;
   newCell->next = NULL;
@@ -36,27 +36,53 @@ List *ListPush(List *list, Tree *tree) {
   // se a lista estiver vazia, insere na primeira posição(que também será a últ
   // ma)
   if (!list->first) {
-
+    printf("inserindo a primeira posicao\n");
     list->first = newCell;
     list->last = newCell;
     return list;
   }
-
   // Caso contrário percorre a lista
   while (current) {
 
-    if (!current->next) {
+    if(TreeWeight(tree) < TreeWeight(current->tree)){
 
-    } else if (TreeWeight(current->next->tree) > TreeWeight(tree)) {
+      if(current == list->first){
+
+        newCell->next = current;
+        list->first = newCell;
+      }
+      else{
+
+        previous->next = newCell;
+        newCell->next = current;
+      }
+      break;
     }
+    if(current == list->last){
 
+      current->next = newCell;
+      list->last = newCell;
+      break;
+    }
+    previous = current;
     current = current->next;
   }
-
   return list;
 }
 
-void PrintList(List *list);
+void PrintList(List *list){
+
+  Cell * current = list->first;
+
+  printf("entrou na funcao de print\n");
+
+  while(current){
+
+    printf("peso -> %d\n",TreeWeight(current->tree));
+    
+    current = current->next;
+  }
+}
 
 Tree *RemoveFromList(List *list, int weight);
 
