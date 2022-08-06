@@ -11,4 +11,6 @@ char ** CreateEncodeTable(List * list);
 
 void PrintEncodeTable(char ** table);
 
+char * ReadFile(char * fileWay);
+
 #endif // !file_manager_h

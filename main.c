@@ -23,6 +23,10 @@ int main(int argc, char *argv[]) {
   table = CreateEncodeTable(list);
   PrintEncodeTable(table);
 
+  char * text;
+  text = ReadFile(argv[1]);
+  printf("texto do arquivo => %s\n", text);
+  
   // List *list = CreateVoidList();
 
   // Tree *tree1, *tree2, *tree3, *tree4, *tree5;
