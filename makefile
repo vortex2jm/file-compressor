@@ -3,6 +3,6 @@ all:
 	@gcc -o prog *.o
 
 clean:
-	@rm *.o prog
+	@rm *.o prog *.comp
 
 test: clean all
