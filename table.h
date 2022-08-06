@@ -13,4 +13,6 @@ void PrintEncodeTable(char ** table);
 
 char * ReadFile(char * fileWay);
 
+char * EncodeText(char ** encodeTable, char * text);
+
 #endif // !file_manager_h

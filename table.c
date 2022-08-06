@@ -70,11 +70,26 @@ char * ReadFile(char * fileWay){
   tam = ftell(file);
   // printf("Tamanho do arquivo = %ld\n", tam);
 
-  
+
   char * text = calloc(tam, sizeof(char));
   //voltando o ponteiro para o inicio do arquivo
   fseek(file,0,SEEK_SET);
   fscanf(file,"%[^EOF]",text);
 
   return text;
+}
+
+//=======================================================================//
+char * EncodeText(char ** encodeTable, char * text){
+
+  long int size=1;
+  for(int x=0; text[x]!='\0'; x++){
+    size += strlen(encodeTable[text[x]]);
+  } 
+
+  char * code = calloc(size,sizeof(char));
+  for(int x=0; text[x]!='\0';x++){
+    strcat(code, encodeTable[text[x]]);
+  }
+  return code;
 }

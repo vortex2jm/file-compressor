@@ -27,6 +27,10 @@ int main(int argc, char *argv[]) {
   text = ReadFile(argv[1]);
   printf("texto do arquivo => %s\n", text);
   
+  char * encodedText;
+  encodedText = EncodeText(table, text);
+  printf("texto codificado => %s\n", encodedText);
+
   // List *list = CreateVoidList();
 
   // Tree *tree1, *tree2, *tree3, *tree4, *tree5;
