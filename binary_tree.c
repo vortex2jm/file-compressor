@@ -1,6 +1,7 @@
 #include "binary_tree.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct tree {
 
@@ -58,4 +59,22 @@ void PrintTree(Tree * tree){
     PrintTree(tree->left);
     PrintTree(tree->right);
   }
+}
+
+
+void FillEncodeTable(char ** table, Tree * tree, unsigned char * code, int treeHeight){
+
+  if(!tree->left && !tree->right){
+    strcpy(table[tree->character], code);
+    return;
+  }
+
+  char left[treeHeight], right[treeHeight];
+  strcpy(left, code);
+  strcpy(right, code);
+  strcat(left,"0");
+  strcat(right,"1");
+
+  FillEncodeTable(table, tree->left, left, treeHeight);
+  FillEncodeTable(table, tree->right, code, treeHeight);
 }
