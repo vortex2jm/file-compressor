@@ -1,4 +1,5 @@
 #include "table.h"
+#include "binary_tree.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -28,3 +29,17 @@ void PrintFrequencyTable(int * table){
     printf("%d -> %d\n", x, table[x]);
   }
 }
+
+char ** CreateEncodeTable(List * list){
+
+  Tree * tree = GetTree(list);
+
+  char ** table = malloc(sizeof(char*)*SIZE);
+  //A tabela possuirá uma coluna a mais que a altura da árvore, pois deve comportar o '\0' das strings
+  for(int x=0;x<SIZE;x++){
+    table[x] = calloc(TreeHeight(tree)+1, sizeof(char));
+  }
+
+  FillEncodeTable(table, tree,"",TreeHeight(tree));
+
+} 
