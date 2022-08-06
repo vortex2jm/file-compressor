@@ -7,22 +7,31 @@
 int main(int argc, char *argv[]) {
 
   int *frequencyTable = CreateFrequencyTable(argv[1]);
+  // PrintFrequencyTable(frequencyTable);
+  
+  List * list;
 
-  List *list = CreateVoidList();
+  list = CreateHuffmanList(frequencyTable);
+  printf("Primeira lista===========\n\n");
+  PrintList(list);
 
-  Tree *tree1, *tree2, *tree3, *tree4, *tree5;
+  list = Huffman_Execute(list);
+  printf("Lista compactada===========\n\n");
+  // List *list = CreateVoidList();
 
-  tree1 = CreateInternalNode(CreateVoidTree(), CreateVoidTree(), 1);
-  tree2 = CreateInternalNode(CreateVoidTree(), CreateVoidTree(), 1);
-  tree3 = CreateInternalNode(CreateVoidTree(), CreateVoidTree(), 2);
-  tree4 = CreateInternalNode(CreateVoidTree(), CreateVoidTree(), 3);
-  tree5 = CreateInternalNode(CreateVoidTree(), CreateVoidTree(), 0);
+  // Tree *tree1, *tree2, *tree3, *tree4, *tree5;
 
-  ListPush(list, tree1);
-  ListPush(list, tree2);
-  ListPush(list, tree3);
-  ListPush(list, tree4);
-  ListPush(list, tree5);
+  // tree1 = CreateInternalNode(CreateVoidTree(), CreateVoidTree(), 1);
+  // tree2 = CreateInternalNode(CreateVoidTree(), CreateVoidTree(), 1);
+  // tree3 = CreateInternalNode(CreateVoidTree(), CreateVoidTree(), 2);
+  // tree4 = CreateInternalNode(CreateVoidTree(), CreateVoidTree(), 3);
+  // tree5 = CreateInternalNode(CreateVoidTree(), CreateVoidTree(), 0);
+
+  // ListPush(list, tree1);
+  // ListPush(list, tree2);
+  // ListPush(list, tree3);
+  // ListPush(list, tree4);
+  // ListPush(list, tree5);
 
   PrintList(list);
 
