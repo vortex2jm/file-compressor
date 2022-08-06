@@ -18,4 +18,6 @@ List * CreateHuffmanList(int * frequencyTable);
 
 List * Huffman_Execute(List * list);
 
+Tree * GetTree(List * list);
+
 #endif // !list_h

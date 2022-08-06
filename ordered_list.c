@@ -154,3 +154,8 @@ List * Huffman_Execute(List * list){
   }
   return list;
 }
+
+//=======================================================================//
+Tree * GetTree(List * list){
+  return list->first->tree;
+}
