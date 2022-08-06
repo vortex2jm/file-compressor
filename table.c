@@ -93,3 +93,35 @@ char * EncodeText(char ** encodeTable, char * text){
   }
   return code;
 }
+
+//=======================================================================//
+void CompressText(unsigned char * text, char * name){
+
+  char fileName[50], noEx[45];
+  sscanf(name, "%[^.]",noEx);
+  sprintf(fileName,"%s.comp",noEx);
+
+  FILE * file = fopen(fileName, "wb");
+  if(!file){
+    printf("File creation failed!\n");
+    exit(1);
+  }
+
+  unsigned char binary = 0;
+  unsigned char aux = 1;
+
+  for(int x=0, y=7; text[x]!='\0';x++,y--){
+    aux = 1;
+    if(text[x] == '1'){
+      aux = aux << y;
+      binary = binary | aux;
+    }
+    if(y<0){
+      fwrite(&binary, sizeof(unsigned char),1, file);  
+      y=7;
+      binary = 0;
+    }
+  }
+  if(strlen(text)%8)(&binary, sizeof(unsigned char),1, file);
+  fclose(file);
+}

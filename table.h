@@ -15,4 +15,6 @@ char * ReadFile(char * fileWay);
 
 char * EncodeText(char ** encodeTable, char * text);
 
+void CompressText(unsigned char * text, char * name);
+
 #endif // !file_manager_h

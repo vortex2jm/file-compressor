@@ -31,5 +31,7 @@ int main(int argc, char *argv[]) {
   encodedText = EncodeText(table, text);
   printf("texto codificado => %s\n", encodedText);
 
+  CompressText(encodedText, argv[1]);
+
   return 0;
 }
