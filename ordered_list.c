@@ -1,5 +1,5 @@
 #include "ordered_list.h"
-#include "binary_tree.h"
+#include "table.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,6 +17,7 @@ struct cell {
   Cell *next;
 };
 
+//=======================================================================//
 List *CreateVoidList() {
 
   List *list = malloc(sizeof(List));
@@ -26,6 +27,7 @@ List *CreateVoidList() {
   return list;
 }
 
+//=======================================================================//
 List *ListPush(List *list, Tree *tree) {
 
   Cell *current = list->first, *previous = NULL;
@@ -43,6 +45,8 @@ List *ListPush(List *list, Tree *tree) {
   }
   // Caso contrário percorre a lista
   while (current) {
+
+    printf("Loop de push\n");
 
     if(TreeWeight(tree) < TreeWeight(current->tree)){
 
@@ -70,20 +74,83 @@ List *ListPush(List *list, Tree *tree) {
   return list;
 }
 
+//=======================================================================//
 void PrintList(List *list){
 
   Cell * current = list->first;
 
-  printf("entrou na funcao de print\n");
-
   while(current){
-
-    printf("peso -> %d\n",TreeWeight(current->tree));
-    
+    PrintTree(current->tree);
+    printf("\n");
     current = current->next;
   }
 }
 
-Tree *RemoveFromList(List *list, int weight);
+//=======================================================================//
+Tree *RemoveFromList(List *list, int weight){
 
+
+}
+
+//=======================================================================//
 void DeleteList(List *list);
+
+//=======================================================================//
+List * CreateHuffmanList(int * frequencyTable){
+
+    //Criando lista vazia
+    List * list = CreateVoidList();
+
+    //declarando variáveis auxiliares
+    Tree * tree;
+    unsigned char character;
+    int weight;
+
+    //preenchendo lista com árvores criadas a partir da tabela de frequência
+    for(int x=0; x<SIZE;x++){
+        if(frequencyTable[x]){
+            tree = CreateLeafNode(CreateVoidTree(), CreateVoidTree(), frequencyTable[x], (unsigned char)x);
+            list = ListPush(list, tree);
+        }
+    }
+    return list;
+}
+
+//=======================================================================//
+List * Huffman_Execute(List * list){
+
+  //retorna null caso não exista a lista ou ela esteja vazia
+  if(!list) return NULL;
+
+  //variaveis auxiliares
+  Cell * current = list->first;
+  Tree * treeCurrent, *treeNext, *newTree;
+  int weightSum =0;
+
+  //enquanto existir duas células na lista, aplicará o algoritmo de huffman
+  while(current){
+    
+    if(current->next){
+      
+      //Criando nova arvore a partir das duas antigas
+      treeCurrent = current->tree;
+      treeNext = current->next->tree;
+      weightSum = TreeWeight(treeCurrent) + TreeWeight(treeNext);
+      newTree = CreateInternalNode(treeCurrent, treeNext, weightSum);
+
+      //reencadeando a lista
+      list->first = current->next->next;
+
+      //liberando as celulas vazias
+      free(current->next);
+      free(current);
+
+      current = list->first;
+
+      //inserindo a nova arvore na lista
+      list = ListPush(list, newTree);
+    }
+    else current = current->next; 
+  }
+  return list;
+}

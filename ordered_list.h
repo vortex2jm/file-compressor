@@ -14,4 +14,8 @@ Tree *RemoveFromList(List *list, int weight);
 
 void DeleteList(List *list);
 
+List * CreateHuffmanList(int * frequencyTable);
+
+List * Huffman_Execute(List * list);
+
 #endif // !list_h
