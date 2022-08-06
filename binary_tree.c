@@ -11,8 +11,10 @@ struct tree {
   Tree *right;
 };
 
+//=======================================================================//
 Tree *CreateVoidTree() { return NULL; }
 
+//=======================================================================//
 Tree *CreateLeafNode(Tree *left, Tree *right, int weight, unsigned char character) {
 
   Tree *tree = malloc(sizeof(Tree));
@@ -24,6 +26,7 @@ Tree *CreateLeafNode(Tree *left, Tree *right, int weight, unsigned char characte
   return tree;
 }
 
+//=======================================================================//
 Tree *CreateInternalNode(Tree *left, Tree *right, int weight) {
 
   Tree *tree = malloc(sizeof(Tree));
@@ -35,6 +38,7 @@ Tree *CreateInternalNode(Tree *left, Tree *right, int weight) {
   return tree;
 }
 
+//=======================================================================//
 int TreeHeight(Tree *tree) {
 
   if (!tree)
@@ -46,12 +50,13 @@ int TreeHeight(Tree *tree) {
     return 1 + TreeHeight(tree->right);
 }
 
+//=======================================================================//
 int TreeWeight(Tree *tree) {
   if(!tree) return -1;    
   return tree->weight;
 }
 
-
+//=======================================================================//
 void PrintTree(Tree * tree){
 
   if(tree){
@@ -61,7 +66,7 @@ void PrintTree(Tree * tree){
   }
 }
 
-
+//=======================================================================//
 void FillEncodeTable(char ** table, Tree * tree, unsigned char * code, int treeHeight){
 
   if(!tree->left && !tree->right){
