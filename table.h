@@ -9,4 +9,6 @@ void PrintFrequencyTable(int * table);
 
 char ** CreateEncodeTable(List * list);
 
+void PrintEncodeTable(char ** table);
+
 #endif // !file_manager_h

@@ -46,8 +46,6 @@ List *ListPush(List *list, Tree *tree) {
   // Caso contrário percorre a lista
   while (current) {
 
-    printf("Loop de push\n");
-
     if(TreeWeight(tree) < TreeWeight(current->tree)){
 
       if(current == list->first){

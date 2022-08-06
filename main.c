@@ -17,6 +17,12 @@ int main(int argc, char *argv[]) {
 
   list = Huffman_Execute(list);
   printf("Lista compactada===========\n\n");
+  PrintList(list);
+
+  char ** table;
+  table = CreateEncodeTable(list);
+  PrintEncodeTable(table);
+
   // List *list = CreateVoidList();
 
   // Tree *tree1, *tree2, *tree3, *tree4, *tree5;
@@ -32,8 +38,5 @@ int main(int argc, char *argv[]) {
   // ListPush(list, tree3);
   // ListPush(list, tree4);
   // ListPush(list, tree5);
-
-  PrintList(list);
-
   return 0;
 }

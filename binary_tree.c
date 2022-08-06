@@ -76,5 +76,5 @@ void FillEncodeTable(char ** table, Tree * tree, unsigned char * code, int treeH
   strcat(right,"1");
 
   FillEncodeTable(table, tree->left, left, treeHeight);
-  FillEncodeTable(table, tree->right, code, treeHeight);
+  FillEncodeTable(table, tree->right, right, treeHeight);
 }

@@ -26,7 +26,9 @@ void PrintFrequencyTable(int * table){
   printf("\n====Tabela de frequencia====\n\n");
 
   for(int x=0;x<SIZE;x++){
-    printf("%d -> %d\n", x, table[x]);
+    if(table[x]){
+      printf("%d -> %d\n", x, table[x]);
+    }
   }
 }
 
@@ -41,5 +43,13 @@ char ** CreateEncodeTable(List * list){
   }
 
   FillEncodeTable(table, tree,"",TreeHeight(tree));
-
+  return table;
 } 
+
+
+void PrintEncodeTable(char ** table){
+  printf("Tabela de codificacao======\n\n");
+  for(int x=0;x<SIZE;x++){
+    printf("%d -> %s\n", x, table[x]);
+  }  
+}
