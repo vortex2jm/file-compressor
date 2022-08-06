@@ -49,3 +49,13 @@ int TreeWeight(Tree *tree) {
   if(!tree) return -1;    
   return tree->weight;
 }
+
+
+void PrintTree(Tree * tree){
+
+  if(tree){
+    printf("-> %d / %c\n", tree->weight, tree->character);
+    PrintTree(tree->left);
+    PrintTree(tree->right);
+  }
+}

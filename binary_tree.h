@@ -13,4 +13,6 @@ int TreeHeight(Tree *tree);
 
 int TreeWeight(Tree *tree);
 
+void PrintTree(Tree * tree);
+
 #endif // !tree_h
