@@ -58,7 +58,7 @@ create_binary:
 clean:
 	@echo $(RED)
 	@echo Cleaning directory...
-	@rm -rf $(OBJ_DIR) *.o *.out *.comp
+	@rm -rf $(OBJ_DIR) *.o *.out *.comp descompactado.txt && clear
 	@echo $(RESET_COLOR)
 
 zip:
