@@ -20,11 +20,11 @@ PURPLE = "\033[1;35m"
 RESET_COLOR = "\033[0m"
 
 
-all: create_directories $(O_FILES) compress unzip create_binary
+all: create_directories $(O_FILES) compress uncompress create_binary
 
 %.o: ./src/%.c ./include/%.h
 	@echo $(YELLOW)
-	@echo Compilling $(C_FILES) files...
+	@echo Compilling ./src/$(C_FILES) files...
 	@$(COMPILER) -c ./src/$(C_FILES) 
 	@mv $(O_FILES) $(OBJ_DIR)
 	@echo $(RESET_COLOR)
@@ -35,7 +35,7 @@ compress: compress.c
 	@$(COMPILER) -c $(ZIP_FILE)
 	@echo $(RESET_COLOR)
 
-unzip: unzip.c
+uncompress: unzip.c
 	@echo $(YELLOW)
 	@echo Compiling $(UNZIP_FILE) file...
 	@$(COMPILER) -c $(UNZIP_FILE)
@@ -49,7 +49,7 @@ create_directories:
 
 create_binary:
 	@echo $(YELLOW)
-	@echo Creating executable file...
+	@echo Creating executable files...
 	@$(COMPILER) -o $(NAME_ZIP) $(OBJ_DIR)/$(O_FILES) $(ZIP_OBJ) $(FLAGS)
 	@$(COMPILER) -o $(NAME_UNZIP) $(OBJ_DIR)/$(O_FILES) $(UNZIP_OBJ) $(FLAGS)
 	@mv $(O_FILES) $(OBJ_DIR)
@@ -66,6 +66,12 @@ zip:
 	@echo Compressing file...
 	@echo $(RESET_COLOR)
 	@./$(NAME_ZIP) $(f)
+
+unzip:
+	@echo $(CYAN)
+	@echo Unziping file...
+	@echo $(RESET_COLOR)
+	@./$(NAME_UNZIP) $(f)
 
 valgrindz:
 	@echo $(CYAN)
