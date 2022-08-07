@@ -1,8 +1,8 @@
 all: 
 	@gcc -c *.c
-	@gcc -o prog *.o
+	@gcc -o compacta.out *.o
 
 clean:
-	@rm *.o prog *.comp
+	@rm *.o compacta.out *.comp
 
 test: clean all

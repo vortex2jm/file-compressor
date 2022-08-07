@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   encodedText = EncodeText(table, text);
   printf("texto codificado => %s\n", encodedText);
 
-  CompressText(encodedText, argv[1]);
+  CreateCompressedFile(encodedText, argv[1], frequencyTable);
 
   return 0;
 }

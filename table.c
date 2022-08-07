@@ -95,7 +95,7 @@ char * EncodeText(char ** encodeTable, char * text){
 }
 
 //=======================================================================//
-void CompressText(unsigned char * text, char * name){
+void CreateCompressedFile(unsigned char * text, char * name, int * frequencyTable){
 
   char fileName[50], noEx[45];
   sscanf(name, "%[^.]",noEx);
@@ -106,6 +106,9 @@ void CompressText(unsigned char * text, char * name){
     printf("File creation failed!\n");
     exit(1);
   }
+
+  //Procurar um jeito de escrever a arvore ou a tabela de codificação no arquivo
+  fwrite(frequencyTable, sizeof(int),256,file);
 
   unsigned char binary = 0;
   unsigned char aux = 1;
@@ -122,6 +125,11 @@ void CompressText(unsigned char * text, char * name){
       binary = 0;
     }
   }
-  if(strlen(text)%8)(&binary, sizeof(unsigned char),1, file);
+  if(strlen(text)%8) fwrite(&binary, sizeof(unsigned char),1, file);
+  
   fclose(file);
+  // int kevin[256];
+  // file = fopen(fileName, "rb");
+  // fread(kevin, sizeof(int),256,file);
+  // PrintFrequencyTable(kevin);
 }
