@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct tree {
+struct tree
+{
 
   int weight;
   unsigned char character;
@@ -15,7 +16,8 @@ struct tree {
 Tree *CreateVoidTree() { return NULL; }
 
 //=======================================================================//
-Tree *CreateLeafNode(Tree *left, Tree *right, int weight, unsigned char character) {
+Tree *CreateLeafNode(Tree *left, Tree *right, int weight, unsigned char character)
+{
 
   Tree *tree = malloc(sizeof(Tree));
   tree->left = left;
@@ -27,7 +29,8 @@ Tree *CreateLeafNode(Tree *left, Tree *right, int weight, unsigned char characte
 }
 
 //=======================================================================//
-Tree *CreateInternalNode(Tree *left, Tree *right, int weight) {
+Tree *CreateInternalNode(Tree *left, Tree *right, int weight)
+{
 
   Tree *tree = malloc(sizeof(Tree));
   tree->left = left;
@@ -39,7 +42,8 @@ Tree *CreateInternalNode(Tree *left, Tree *right, int weight) {
 }
 
 //=======================================================================//
-int TreeHeight(Tree *tree) {
+int TreeHeight(Tree *tree)
+{
 
   if (!tree)
     return -1;
@@ -51,15 +55,19 @@ int TreeHeight(Tree *tree) {
 }
 
 //=======================================================================//
-int TreeWeight(Tree *tree) {
-  if(!tree) return -1;    
+int TreeWeight(Tree *tree)
+{
+  if (!tree)
+    return -1;
   return tree->weight;
 }
 
 //=======================================================================//
-void PrintTree(Tree * tree){
+void PrintTree(Tree *tree)
+{
 
-  if(tree){
+  if (tree)
+  {
     printf("-> %d / %c\n", tree->weight, tree->character);
     PrintTree(tree->left);
     PrintTree(tree->right);
@@ -67,9 +75,11 @@ void PrintTree(Tree * tree){
 }
 
 //=======================================================================//
-void FillEncodeTable(char ** table, Tree * tree, unsigned char * code, int treeHeight){
+void FillEncodeTable(char **table, Tree *tree, unsigned char *code, int treeHeight)
+{
 
-  if(!tree->left && !tree->right){
+  if (!tree->left && !tree->right)
+  {
     strcpy(table[tree->character], code);
     return;
   }
@@ -77,8 +87,8 @@ void FillEncodeTable(char ** table, Tree * tree, unsigned char * code, int treeH
   char left[treeHeight], right[treeHeight];
   strcpy(left, code);
   strcpy(right, code);
-  strcat(left,"0");
-  strcat(right,"1");
+  strcat(left, "0");
+  strcat(right, "1");
 
   FillEncodeTable(table, tree->left, left, treeHeight);
   FillEncodeTable(table, tree->right, right, treeHeight);

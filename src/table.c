@@ -5,128 +5,147 @@
 #include <string.h>
 
 //=======================================================================//
-int *CreateFrequencyTable(char *fileWay) {
+int *CreateFrequencyTable(char *fileWay)
+{
 
   static int table[SIZE] = {0};
   unsigned char read_char = '\0';
   FILE *file = fopen(fileWay, "r");
   int index = 0;
 
-  while (1) {
-    if (feof(file)) {
+  while (1)
+  {
+    if (feof(file))
+    {
       table[read_char]--;
       break;
     }
     fscanf(file, "%c", &read_char);
-    table[read_char]+=1;
+    table[read_char] += 1;
   }
   return table;
 }
 
 //=======================================================================//
-void PrintFrequencyTable(int * table){
+void PrintFrequencyTable(int *table)
+{
 
   printf("\n====Tabela de frequencia====\n\n");
 
-  for(int x=0;x<SIZE;x++){
-    if(table[x]){
+  for (int x = 0; x < SIZE; x++)
+  {
+    if (table[x])
+    {
       printf("%d -> %d\n", x, table[x]);
     }
   }
 }
 
 //=======================================================================//
-char ** CreateEncodeTable(List * list){
+char **CreateEncodeTable(List *list)
+{
 
-  Tree * tree = GetTree(list);
+  Tree *tree = GetTree(list);
 
-  char ** table = malloc(sizeof(char*)*SIZE);
-  //A tabela possuirá uma coluna a mais que a altura da árvore, pois deve comportar o '\0' das strings
-  for(int x=0;x<SIZE;x++){
-    table[x] = calloc(TreeHeight(tree)+1, sizeof(char));
+  char **table = malloc(sizeof(char *) * SIZE);
+  // A tabela possuirá uma coluna a mais que a altura da árvore, pois deve comportar o '\0' das strings
+  for (int x = 0; x < SIZE; x++)
+  {
+    table[x] = calloc(TreeHeight(tree) + 1, sizeof(char));
   }
 
-  FillEncodeTable(table, tree,"",TreeHeight(tree));
+  FillEncodeTable(table, tree, "", TreeHeight(tree));
   return table;
-} 
-
-//=======================================================================//
-void PrintEncodeTable(char ** table){
-  printf("Tabela de codificacao======\n\n");
-  for(int x=0;x<SIZE;x++){
-    printf("%d -> %s\n", x, table[x]);
-  }  
 }
 
 //=======================================================================//
-char * ReadFile(char * fileWay){
+void PrintEncodeTable(char **table)
+{
+  printf("Tabela de codificacao======\n\n");
+  for (int x = 0; x < SIZE; x++)
+  {
+    printf("%d -> %s\n", x, table[x]);
+  }
+}
 
-  FILE * file = fopen(fileWay,"r");
+//=======================================================================//
+char *ReadFile(char *fileWay)
+{
+
+  FILE *file = fopen(fileWay, "r");
   long int tam;
 
-  //aponta para o final do arquivo
+  // aponta para o final do arquivo
   fseek(file, 0, SEEK_END);
-  //Conta a quantidade de bytes que o arquivo possui do ínicio até a posição atual
+  // Conta a quantidade de bytes que o arquivo possui do ínicio até a posição atual
   tam = ftell(file);
   // printf("Tamanho do arquivo = %ld\n", tam);
 
-
-  char * text = calloc(tam, sizeof(char));
-  //voltando o ponteiro para o inicio do arquivo
-  fseek(file,0,SEEK_SET);
-  fscanf(file,"%[^EOF]",text);
+  char *text = calloc(tam, sizeof(char));
+  // voltando o ponteiro para o inicio do arquivo
+  fseek(file, 0, SEEK_SET);
+  fscanf(file, "%[^EOF]", text);
 
   return text;
 }
 
 //=======================================================================//
-char * EncodeText(char ** encodeTable, char * text){
+char *EncodeText(char **encodeTable, char *text)
+{
 
-  long int size=1;
-  for(int x=0; text[x]!='\0'; x++){
+  long int size = 1;
+  for (int x = 0; text[x] != '\0'; x++)
+  {
     size += strlen(encodeTable[text[x]]);
-  } 
+  }
 
-  char * code = calloc(size,sizeof(char));
-  for(int x=0; text[x]!='\0';x++){
+  char *code = calloc(size, sizeof(char));
+  for (int x = 0; text[x] != '\0'; x++)
+  {
     strcat(code, encodeTable[text[x]]);
   }
   return code;
 }
 
 //=======================================================================//
-void CreateCompressedFile(unsigned char * text, char * name, int * frequencyTable){
+void CreateCompressedFile(unsigned char *text, char *name, int *frequencyTable)
+{
 
   char fileName[50], noEx[45];
-  sscanf(name, "%[^.]",noEx);
-  sprintf(fileName,"%s.comp",noEx);
+  sscanf(name, "%[^.]", noEx);
+  sprintf(fileName, "%s.comp", noEx);
 
-  FILE * file = fopen(fileName, "wb");
-  if(!file){
+  FILE *file = fopen(fileName, "wb");
+  if (!file)
+  {
     printf("File creation failed!\n");
     exit(1);
   }
 
-  //Procurar um jeito de escrever a arvore ou a tabela de codificação no arquivo
-  fwrite(frequencyTable, sizeof(int),256,file);
+  // Procurar um jeito de escrever a arvore ou a tabela de codificação no arquivo
+  fwrite(frequencyTable, sizeof(int), 256, file);
 
   unsigned char binary = 0;
   unsigned char aux = 1;
 
-  for(int x=0, y=7; text[x]!='\0';x++,y--){
+  for (int x = 0, y = 7; text[x] != '\0'; x++, y--)
+  {
     aux = 1;
-    if(text[x] == '1'){
+    if (text[x] == '1')
+    {
       aux = aux << y;
       binary = binary | aux;
     }
-    if(y<0){
-      fwrite(&binary, sizeof(unsigned char),1, file);  
-      y=7;
+    if (y < 0)
+    {
+      fwrite(&binary, sizeof(unsigned char), 1, file);
+      y = 7;
       binary = 0;
     }
   }
-  if(strlen(text)%8) fwrite(&binary, sizeof(unsigned char),1, file);
-  
+  if (strlen(text) % 8)
+    fwrite(&binary, sizeof(unsigned char), 1, file);
+
   fclose(file);
   // int kevin[256];
   // file = fopen(fileName, "rb");

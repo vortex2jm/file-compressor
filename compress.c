@@ -4,12 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
   int *frequencyTable = CreateFrequencyTable(argv[1]);
   // PrintFrequencyTable(frequencyTable);
-  
-  List * list;
+
+  List *list;
 
   list = CreateHuffmanList(frequencyTable);
   printf("Primeira lista===========\n\n");
@@ -19,15 +20,15 @@ int main(int argc, char *argv[]) {
   printf("Lista compactada===========\n\n");
   PrintList(list);
 
-  char ** table;
+  char **table;
   table = CreateEncodeTable(list);
   PrintEncodeTable(table);
 
-  char * text;
+  char *text;
   text = ReadFile(argv[1]);
   printf("texto do arquivo => %s\n", text);
-  
-  char * encodedText;
+
+  char *encodedText;
   encodedText = EncodeText(table, text);
   printf("texto codificado => %s\n", encodedText);
 
