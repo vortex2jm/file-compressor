@@ -124,6 +124,9 @@ void CreateCompressedFile(unsigned char *text, char *name, int *frequencyTable)
 
   // Procurar um jeito de escrever a arvore ou a tabela de codificação no arquivo
   fwrite(frequencyTable, sizeof(int), 256, file);
+  //MODIFICADO
+  unsigned long int encodedTextLenght = strlen(text);
+  fwrite(&encodedTextLenght, sizeof(unsigned long int),1,file);
 
   unsigned char binary = 0;
   unsigned char aux = 1;
@@ -152,20 +155,32 @@ void CreateCompressedFile(unsigned char *text, char *name, int *frequencyTable)
 
 //=======================================================================//
 void UnzipFile(FILE *compressedFile, List *list, char *fileName)
-{
+{ 
+  char name[50], noEx[45];
+  sscanf(fileName, "%[^.]", noEx);
+  sprintf(name, "%s.txt", noEx);
+
   //Abrindo arquivo descompactado
-  FILE *unzipedFile = fopen("descompactado.txt", "w");
+  FILE *unzipedFile = fopen(name, "w");
 
   Tree *tree = GetTree(list);
   unsigned char binary;
   unsigned char aux = 1;
 
+  //MODIFICADO
+  unsigned long int encodedTextLenght=0;
+  fread(&encodedTextLenght, sizeof(unsigned long int), 1, compressedFile);
+  printf("lenght = %ld\n", encodedTextLenght);
+
+  unsigned long int byteCounter=0;
+
   while (fread(&binary, sizeof(unsigned char), 1, compressedFile))
   {
     aux = 1;
-
+    
     for (int x = 7; x >= 0; x--)
     { 
+      byteCounter++;
       aux = aux << x;
 
       if (aux & binary){
@@ -179,10 +194,17 @@ void UnzipFile(FILE *compressedFile, List *list, char *fileName)
       if (!GetLeftTree(tree) && !GetRightTree(tree)){ 
         fprintf(unzipedFile, "%c", GetTreeChar(tree));
         tree = GetTree(list); //voltando para o nó raíz
+
+        //se a quantidade de bits lidos for igual ao tamanho do texto
+        //codificado, ele encerra o loop para evitar ler caracteres adicionais
+        //caso a quantidade total não seja múltiplo de 8
+        if(byteCounter == encodedTextLenght)break;
       }
       //resetando o valor de aux para realizar um novo bitshift
       aux = 1;
     }
   }
+  printf("byteCounter = %ld\n", byteCounter);
+
   fclose(unzipedFile);
 }
