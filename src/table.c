@@ -129,26 +129,60 @@ void CreateCompressedFile(unsigned char *text, char *name, int *frequencyTable)
   unsigned char aux = 1;
 
   for (int x = 0, y = 7; text[x] != '\0'; x++, y--)
-  {
+  { 
     aux = 1;
     if (text[x] == '1')
     {
       aux = aux << y;
       binary = binary | aux;
     }
-    if (y < 0)
+    if (y == 0)
     {
       fwrite(&binary, sizeof(unsigned char), 1, file);
-      y = 7;
+      y = 8;
       binary = 0;
     }
   }
+
   if (strlen(text) % 8)
     fwrite(&binary, sizeof(unsigned char), 1, file);
 
   fclose(file);
-  // int kevin[256];
-  // file = fopen(fileName, "rb");
-  // fread(kevin, sizeof(int),256,file);
-  // PrintFrequencyTable(kevin);
+}
+
+//=======================================================================//
+void UnzipFile(FILE *compressedFile, List *list, char *fileName)
+{
+  //Abrindo arquivo descompactado
+  FILE *unzipedFile = fopen("descompactado.txt", "w");
+
+  Tree *tree = GetTree(list);
+  unsigned char binary;
+  unsigned char aux = 1;
+
+  while (fread(&binary, sizeof(unsigned char), 1, compressedFile))
+  {
+    aux = 1;
+
+    for (int x = 7; x >= 0; x--)
+    { 
+      aux = aux << x;
+
+      if (aux & binary){
+        tree = GetRightTree(tree);
+      }
+      else{
+        tree = GetLeftTree(tree);
+      }
+
+      //se chegou no nó folha, imprime o caracter no arquivo
+      if (!GetLeftTree(tree) && !GetRightTree(tree)){ 
+        fprintf(unzipedFile, "%c", GetTreeChar(tree));
+        tree = GetTree(list); //voltando para o nó raíz
+      }
+      //resetando o valor de aux para realizar um novo bitshift
+      aux = 1;
+    }
+  }
+  fclose(unzipedFile);
 }
