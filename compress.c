@@ -6,33 +6,23 @@
 
 int main(int argc, char *argv[])
 {
-
   int *frequencyTable = CreateFrequencyTable(argv[1]);
-  // PrintFrequencyTable(frequencyTable);
 
-  List *list;
+  List *list = CreateHuffmanList(frequencyTable);
 
-  list = CreateHuffmanList(frequencyTable);
-  printf("Primeira lista===========\n\n");
-  PrintList(list);
+  Huffman_Execute(list);
 
-  list = Huffman_Execute(list);
-  printf("Lista compactada===========\n\n");
-  PrintList(list);
+  char **table = CreateEncodeTable(list);
 
-  char **table;
-  table = CreateEncodeTable(list);
-  PrintEncodeTable(table);
+  char *text = ReadFile(argv[1]);
 
-  char *text;
-  text = ReadFile(argv[1]);
-  printf("texto do arquivo => %s\n", text);
-
-  char *encodedText;
-  encodedText = EncodeText(table, text);
-  printf("texto codificado => %s\n", encodedText);
+  char *encodedText = EncodeText(table, text);
 
   CreateCompressedFile(encodedText, argv[1], frequencyTable);
 
+  DestructList(list);
+  DestructEncodeTable(table);
+  free(text);
+  free(encodedText);
   return 0;
 }

@@ -96,12 +96,19 @@ void PrintList(List *list)
 }
 
 //=======================================================================//
-Tree *RemoveFromList(List *list, int weight)
-{
+void DestructList(List *list){
+  
+  if(list){
+    Cell * current = list->first, *aux;
+    while(current){
+      aux = current->next;
+      DestructTree(current->tree);
+      free(current);
+      current = aux;
+    }
+    free(list);
+  }
 }
-
-//=======================================================================//
-void DeleteList(List *list);
 
 //=======================================================================//
 List *CreateHuffmanList(int *frequencyTable)

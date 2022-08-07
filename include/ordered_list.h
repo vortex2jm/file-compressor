@@ -12,7 +12,7 @@ void PrintList(List *list);
 
 Tree *RemoveFromList(List *list, int weight);
 
-void DeleteList(List *list);
+void DestructList(List *list);
 
 List * CreateHuffmanList(int * frequencyTable);
 

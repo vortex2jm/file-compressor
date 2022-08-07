@@ -7,7 +7,6 @@
 //=======================================================================//
 int *CreateFrequencyTable(char *fileWay)
 {
-
   static int table[SIZE] = {0};
   unsigned char read_char = '\0';
   FILE *file = fopen(fileWay, "r");
@@ -23,15 +22,15 @@ int *CreateFrequencyTable(char *fileWay)
     fscanf(file, "%c", &read_char);
     table[read_char] += 1;
   }
+  fclose(file);
+
   return table;
 }
 
 //=======================================================================//
 void PrintFrequencyTable(int *table)
 {
-
   printf("\n====Tabela de frequencia====\n\n");
-
   for (int x = 0; x < SIZE; x++)
   {
     if (table[x])
@@ -44,7 +43,6 @@ void PrintFrequencyTable(int *table)
 //=======================================================================//
 char **CreateEncodeTable(List *list)
 {
-
   Tree *tree = GetTree(list);
 
   char **table = malloc(sizeof(char *) * SIZE);
@@ -69,9 +67,18 @@ void PrintEncodeTable(char **table)
 }
 
 //=======================================================================//
+void DestructEncodeTable(char ** table){
+  if(table){
+    for(int x=0; x<SIZE;x++){
+      if(table[x]) free(table[x]);
+    }
+    free(table);
+  }
+}
+
+//=======================================================================//
 char *ReadFile(char *fileWay)
 {
-
   FILE *file = fopen(fileWay, "r");
   long int tam;
 
@@ -79,12 +86,13 @@ char *ReadFile(char *fileWay)
   fseek(file, 0, SEEK_END);
   // Conta a quantidade de bytes que o arquivo possui do ínicio até a posição atual
   tam = ftell(file);
-  // printf("Tamanho do arquivo = %ld\n", tam);
 
   char *text = calloc(tam, sizeof(char));
   // voltando o ponteiro para o inicio do arquivo
   fseek(file, 0, SEEK_SET);
   fscanf(file, "%[^EOF]", text);
+
+  fclose(file);
 
   return text;
 }
@@ -92,7 +100,6 @@ char *ReadFile(char *fileWay)
 //=======================================================================//
 char *EncodeText(char **encodeTable, char *text)
 {
-
   long int size = 1;
   for (int x = 0; text[x] != '\0'; x++)
   {
@@ -110,7 +117,6 @@ char *EncodeText(char **encodeTable, char *text)
 //=======================================================================//
 void CreateCompressedFile(unsigned char *text, char *name, int *frequencyTable)
 {
-
   char fileName[50], noEx[45];
   sscanf(name, "%[^.]", noEx);
   sprintf(fileName, "%s.comp", noEx);
@@ -124,7 +130,7 @@ void CreateCompressedFile(unsigned char *text, char *name, int *frequencyTable)
 
   // Procurar um jeito de escrever a arvore ou a tabela de codificação no arquivo
   fwrite(frequencyTable, sizeof(int), 256, file);
-  //MODIFICADO
+
   unsigned long int encodedTextLenght = strlen(text);
   fwrite(&encodedTextLenght, sizeof(unsigned long int),1,file);
 
@@ -146,10 +152,8 @@ void CreateCompressedFile(unsigned char *text, char *name, int *frequencyTable)
       binary = 0;
     }
   }
-
   if (strlen(text) % 8)
     fwrite(&binary, sizeof(unsigned char), 1, file);
-
   fclose(file);
 }
 
@@ -170,26 +174,22 @@ void UnzipFile(FILE *compressedFile, List *list, char *fileName)
   //MODIFICADO
   unsigned long int encodedTextLenght=0;
   fread(&encodedTextLenght, sizeof(unsigned long int), 1, compressedFile);
-  printf("lenght = %ld\n", encodedTextLenght);
 
   unsigned long int byteCounter=0;
 
   while (fread(&binary, sizeof(unsigned char), 1, compressedFile))
   {
     aux = 1;
-    
     for (int x = 7; x >= 0; x--)
     { 
       byteCounter++;
       aux = aux << x;
-
       if (aux & binary){
         tree = GetRightTree(tree);
       }
       else{
         tree = GetLeftTree(tree);
       }
-
       //se chegou no nó folha, imprime o caracter no arquivo
       if (!GetLeftTree(tree) && !GetRightTree(tree)){ 
         fprintf(unzipedFile, "%c", GetTreeChar(tree));
@@ -204,7 +204,5 @@ void UnzipFile(FILE *compressedFile, List *list, char *fileName)
       aux = 1;
     }
   }
-  printf("byteCounter = %ld\n", byteCounter);
-
   fclose(unzipedFile);
 }

@@ -109,3 +109,12 @@ void FillEncodeTable(char **table, Tree *tree, unsigned char *code, int treeHeig
   FillEncodeTable(table, tree->left, left, treeHeight);
   FillEncodeTable(table, tree->right, right, treeHeight);
 }
+
+//=======================================================================//
+void DestructTree(Tree * tree){
+  if(tree){
+    DestructTree(tree->left);
+    DestructTree(tree->right);
+    free(tree);
+  }
+}

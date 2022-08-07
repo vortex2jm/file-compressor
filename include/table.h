@@ -12,6 +12,8 @@ char ** CreateEncodeTable(List * list);
 
 void PrintEncodeTable(char ** table);
 
+void DestructEncodeTable(char ** table);
+
 char * ReadFile(char * fileWay);
 
 char * EncodeText(char ** encodeTable, char * text);

@@ -10,18 +10,16 @@ int main(int argc, char *argv[])
 
   //lendo tabela de frequência
   fread(frequencyTable,sizeof(int),256,file);
-  PrintFrequencyTable(frequencyTable);
 
   //Recriando a árvore binária a partir da tabela de frequência
   List * list = CreateHuffmanList(frequencyTable);
-  printf("Primeira lista===========\n\n");
-  PrintList(list);
 
   Huffman_Execute(list);
-  printf("Lista compactada===========\n\n");
-  PrintList(list);
 
   UnzipFile(file, list, argv[1]);
+  
+  fclose(file);
+  DestructList(list);
 
   return 0;
 }
