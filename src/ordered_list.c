@@ -43,7 +43,6 @@ List *ListPush(List *list, Tree *tree)
   // ma)
   if (!list->first)
   {
-    printf("inserindo a primeira posicao\n");
     list->first = newCell;
     list->last = newCell;
     return list;
