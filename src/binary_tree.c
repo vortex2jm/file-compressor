@@ -1,11 +1,11 @@
 #include "../include/binary_tree.h"
+#include "../include/ordered_list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 struct tree
 {
-
   int weight;
   unsigned char character;
   Tree *left;
@@ -72,6 +72,22 @@ void PrintTree(Tree *tree)
     PrintTree(tree->left);
     PrintTree(tree->right);
   }
+}
+
+//=======================================================================//
+Tree * GetLeftTree(Tree * tree){
+  return tree->left;
+}
+
+//=======================================================================//
+Tree * GetRightTree(Tree * tree){
+  return tree->right;
+}
+
+//=======================================================================//
+unsigned char GetTreeChar(Tree * tree){
+  if(!tree) return '\0';
+  return tree->character;
 }
 
 //=======================================================================//
