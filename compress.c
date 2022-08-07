@@ -1,6 +1,6 @@
-#include "binary_tree.h"
-#include "ordered_list.h"
-#include "table.h"
+#include "./include/binary_tree.h"
+#include "./include/ordered_list.h"
+#include "./include/table.h"
 #include <stdio.h>
 #include <stdlib.h>
 
