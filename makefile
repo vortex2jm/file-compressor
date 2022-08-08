@@ -13,8 +13,10 @@ UNZIP_FILE = unzip.c
 ZIP_OBJ = compress.o
 UNZIP_OBJ = unzip.o
 
+GREEN_UNDER = "\033[4;32m"
 YELLOW = "\033[1;33m"
-RED = "\033[1;31m" 
+RED =  "\033[1;31m"
+RED_UNDER = "\033[4;31m" 
 CYAN = "\033[1;36m"
 PURPLE = "\033[1;35m"
 RESET_COLOR = "\033[0m"
@@ -58,7 +60,8 @@ create_binary:
 clean:
 	@echo $(RED)
 	@echo Cleaning directory...
-	@rm -rf $(OBJ_DIR) *.o *.out *.comp descompactado.txt && clear
+	@rm -rf $(OBJ_DIR) *.o *.out *.comp descompactado.txt
+	@clear
 	@echo $(RESET_COLOR)
 
 zip:
@@ -72,6 +75,15 @@ unzip:
 	@echo Unziping file...
 	@echo $(RESET_COLOR)
 	@./$(NAME_UNZIP) $(f)
+
+size: 
+	@echo $(RED_UNDER)
+	@echo file size:
+	@du -h $(f).txt
+	@echo $(GREEN_UNDER)
+	@echo compressed file size:
+	@du -h $(f).comp
+	@echo $(RESET_COLOR)
 
 valgrindz:
 	@echo $(CYAN)
