@@ -4,22 +4,22 @@
 #include <stdio.h>
 #define SIZE 256
 
-int *CreateFrequencyTable(char *fileWay);
+int *CreateFrequencyTable(unsigned char *fileWay);
 
 void PrintFrequencyTable(int * table);
 
-char ** CreateEncodeTable(List * list);
+unsigned char ** CreateEncodeTable(List * list);
 
-void PrintEncodeTable(char ** table);
+void PrintEncodeTable(unsigned char ** table);
 
-void DestructEncodeTable(char ** table);
+void DestructEncodeTable(unsigned char ** table);
 
-char * ReadFile(char * fileWay);
+unsigned char * ReadFile(unsigned char * fileWay, unsigned char ** table, long int fileSize);
 
-char * EncodeText(char ** encodeTable, char * text);
+unsigned char * EncodeText(unsigned char ** encodeTable, unsigned char * text, long int fileSize, long int * encodedTextSize);
 
-void CreateCompressedFile(unsigned char * text, char * name, int * frequencyTable);
+void CreateCompressedFile(unsigned char * text, unsigned char * name, int * frequencyTable, long int fileSize, long int encodedTextSize);
 
-void UnzipFile(FILE *compressedFile, List *list, char *fileName);
+void UnzipFile(FILE *compressedFile, List *list, unsigned char *fileName);
 
 #endif // !file_manager_h

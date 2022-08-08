@@ -91,7 +91,7 @@ unsigned char GetTreeChar(Tree * tree){
 }
 
 //=======================================================================//
-void FillEncodeTable(char **table, Tree *tree, unsigned char *code, int treeHeight)
+void FillEncodeTable(unsigned char **table, Tree *tree, unsigned char *code, int treeHeight)
 {
 
   if (!tree->left && !tree->right)
@@ -100,7 +100,7 @@ void FillEncodeTable(char **table, Tree *tree, unsigned char *code, int treeHeig
     return;
   }
 
-  char left[treeHeight], right[treeHeight];
+  unsigned char left[treeHeight], right[treeHeight];
   strcpy(left, code);
   strcpy(right, code);
   strcat(left, "0");
