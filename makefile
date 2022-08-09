@@ -8,9 +8,9 @@ OBJ_DIR = ./objects
 
 C_FILES = *.c
 O_FILES = *.o
-ZIP_FILE = compress.c
+ZIP_FILE = zip.c 
 UNZIP_FILE = unzip.c
-ZIP_OBJ = compress.o
+ZIP_OBJ = zip.o 
 UNZIP_OBJ = unzip.o
 
 GREEN_UNDER = "\033[4;32m"
@@ -31,7 +31,7 @@ all: create_directories $(O_FILES) compress uncompress create_binary
 	@mv $(O_FILES) $(OBJ_DIR)
 	@echo $(RESET_COLOR)
 
-compress: compress.c
+compress: zip.c 
 	@echo $(YELLOW)
 	@echo Compiling $(ZIP_FILE) file...
 	@$(COMPILER) -c $(ZIP_FILE)

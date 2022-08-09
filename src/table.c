@@ -92,7 +92,7 @@ unsigned char *EncodeText(unsigned char **encodeTable, unsigned char *text,
   }
   *encodedTextSize = size;
 
-  unsigned char *code = calloc(size, sizeof(unsigned char));
+  unsigned char *code = calloc(size+1, sizeof(unsigned char));
   for (int x = 0; x < fileSize; x++) {
     strcat(code, encodeTable[text[x]]);
   }
@@ -133,7 +133,8 @@ void CreateCompressedFile(unsigned char *text, unsigned char *name,
       binary = 0;
     }
   }
-  if (strlen(text) % 8)
+  // if(strlen(text) % 8)
+  if (encodedTextSize % 8)
     fwrite(&binary, sizeof(unsigned char), 1, file);
   fclose(file);
 }
