@@ -22,4 +22,6 @@ void CreateCompressedFile(unsigned char * text, unsigned char * name, int * freq
 
 void UnzipFile(FILE *compressedFile, List *list, unsigned char *fileName);
 
+long int GetFileSize(char * fileName);
+
 #endif // !file_manager_h

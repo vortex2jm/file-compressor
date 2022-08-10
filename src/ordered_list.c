@@ -150,10 +150,8 @@ List *Huffman_Execute(List *list)
   // enquanto existir duas células na lista, aplicará o algoritmo de huffman
   while (current)
   {
-
     if (current->next)
     {
-
       // Criando nova arvore a partir das duas antigas
       treeCurrent = current->tree;
       treeNext = current->next->tree;
@@ -167,10 +165,10 @@ List *Huffman_Execute(List *list)
       free(current->next);
       free(current);
 
-      current = list->first;
-
       // inserindo a nova arvore na lista
       list = ListPush(list, newTree);
+      
+      current = list->first;
     }
     else
       current = current->next;

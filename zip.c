@@ -7,11 +7,7 @@
 int main(int argc, char *argv[])
 { 
 
-  FILE * file = fopen(argv[1],"rb");
-  fseek(file,0,SEEK_END);
-  long int fileSize = ftell(file);
-  fseek(file,0,SEEK_SET);
-  fclose(file);
+  long int fileSize = GetFileSize(argv[1]);
 
   int *frequencyTable = CreateFrequencyTable(argv[1]);
 
@@ -32,5 +28,6 @@ int main(int argc, char *argv[])
   DestructEncodeTable(table);
   free(text);
   free(encodedText);
+
   return 0;
 }

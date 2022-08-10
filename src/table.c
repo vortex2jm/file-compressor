@@ -212,3 +212,15 @@ void UnzipFile(FILE *compressedFile, List *list, unsigned char *fileName) {
   }
   fclose(unzipedFile);
 }
+
+//=======================================================================//
+long int GetFileSize(char * fileName){
+
+  FILE * file = fopen(fileName,"rb");
+  fseek(file,0,SEEK_END);
+  long int fileSize = ftell(file);
+  fseek(file,0,SEEK_SET);
+  fclose(file);
+
+  return fileSize;
+}
