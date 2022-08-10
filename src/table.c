@@ -93,9 +93,31 @@ unsigned char *EncodeText(unsigned char **encodeTable, unsigned char *text,
   *encodedTextSize = size;
 
   unsigned char *code = calloc(size+1, sizeof(unsigned char));
-  for (int x = 0; x < fileSize; x++) {
-    strcat(code, encodeTable[text[x]]);
+  
+  long int encodedTextIndex = 0, codeIndex=0;
+  for(int x=0; x<fileSize;x++){
+    while(encodeTable[text[x]][codeIndex] != '\0'){
+
+      code[encodedTextIndex] = encodeTable[text[x]][codeIndex];
+      encodedTextIndex++;
+      codeIndex++;
+    }
+    codeIndex=0;
   }
+
+  /*O trecho abaixo foi removido pois a função strcat em loop 
+  estava deixando o código ineficiente. Em arquivos maiores, a função 
+  precisava percorrer strings muito grandes para concatenar*/
+
+  /*O trecho que substitui insere os bytes por acesso direto ao
+  índice do vetor, o que torna o programa mais rápido. Utilizando a strcat,
+  demorava cerca de 10 minutos para montar a stream codificada de um arquivo
+  de 4MB. Com o acesso direto demora menos de 1 segundo*/
+
+  // for (int x = 0; x < fileSize; x++) {
+  //   strcat(code, encodeTable[text[x]]);
+  // }
+
   return code;
 }
 
