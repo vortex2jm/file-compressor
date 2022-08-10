@@ -87,7 +87,7 @@ size:
 
 valgrindz:
 	@echo $(CYAN)
-	@echo Running valgrind on $(NAME_UNZIP)
+	@echo Running valgrind on $(NAME_ZIP)
 	@echo $(RESET_COLOR)
 	@valgrind ./$(NAME_ZIP) $(f)
 
