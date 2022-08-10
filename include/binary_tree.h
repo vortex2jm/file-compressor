@@ -23,6 +23,4 @@ unsigned char GetTreeChar(Tree * tree);
 
 void DestructTree(Tree * tree);
 
-void FillEncodeTable(unsigned char ** table, Tree * tree, unsigned char * code, int treeHeight);
-
 #endif // !tree_h

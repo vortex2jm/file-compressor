@@ -18,7 +18,6 @@ Tree *CreateVoidTree() { return NULL; }
 //=======================================================================//
 Tree *CreateLeafNode(Tree *left, Tree *right, int weight, unsigned char character)
 {
-
   Tree *tree = malloc(sizeof(Tree));
   tree->left = left;
   tree->right = right;
@@ -31,7 +30,6 @@ Tree *CreateLeafNode(Tree *left, Tree *right, int weight, unsigned char characte
 //=======================================================================//
 Tree *CreateInternalNode(Tree *left, Tree *right, int weight)
 {
-
   Tree *tree = malloc(sizeof(Tree));
   tree->left = left;
   tree->right = right;
@@ -44,7 +42,6 @@ Tree *CreateInternalNode(Tree *left, Tree *right, int weight)
 //=======================================================================//
 int TreeHeight(Tree *tree)
 {
-
   if (!tree)
     return -1;
 
@@ -65,7 +62,6 @@ int TreeWeight(Tree *tree)
 //=======================================================================//
 void PrintTree(Tree *tree)
 {
-
   if (tree)
   {
     printf("-> %d / %c\n", tree->weight, tree->character);
@@ -88,26 +84,6 @@ Tree * GetRightTree(Tree * tree){
 unsigned char GetTreeChar(Tree * tree){
   if(!tree) return '\0';
   return tree->character;
-}
-
-//=======================================================================//
-void FillEncodeTable(unsigned char **table, Tree *tree, unsigned char *code, int treeHeight)
-{
-
-  if (!tree->left && !tree->right)
-  {
-    strcpy(table[tree->character], code);
-    return;
-  }
-
-  unsigned char left[treeHeight], right[treeHeight];
-  strcpy(left, code);
-  strcpy(right, code);
-  strcat(left, "0");
-  strcat(right, "1");
-
-  FillEncodeTable(table, tree->left, left, treeHeight);
-  FillEncodeTable(table, tree->right, right, treeHeight);
 }
 
 //=======================================================================//

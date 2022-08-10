@@ -7,14 +7,12 @@ typedef struct cell Cell;
 
 struct list
 {
-
   Cell *first;
   Cell *last;
 };
 
 struct cell
 {
-
   Tree *tree;
   Cell *next;
 };
@@ -22,7 +20,6 @@ struct cell
 //=======================================================================//
 List *CreateVoidList()
 {
-
   List *list = malloc(sizeof(List));
   list->first = NULL;
   list->last = NULL;
@@ -33,7 +30,6 @@ List *CreateVoidList()
 //=======================================================================//
 List *ListPush(List *list, Tree *tree)
 {
-
   Cell *current = list->first, *previous = NULL;
   Cell *newCell = malloc(sizeof(Cell));
   newCell->tree = tree;
@@ -47,22 +43,18 @@ List *ListPush(List *list, Tree *tree)
     list->last = newCell;
     return list;
   }
-  // Caso contrário percorre a lista
+  // Caso contrário percorre a lista e insere na posição ordenada
   while (current)
   {
-
     if (TreeWeight(tree) < TreeWeight(current->tree))
     {
-
       if (current == list->first)
       {
-
         newCell->next = current;
         list->first = newCell;
       }
       else
       {
-
         previous->next = newCell;
         newCell->next = current;
       }
@@ -70,7 +62,6 @@ List *ListPush(List *list, Tree *tree)
     }
     if (current == list->last)
     {
-
       current->next = newCell;
       list->last = newCell;
       break;
@@ -84,9 +75,7 @@ List *ListPush(List *list, Tree *tree)
 //=======================================================================//
 void PrintList(List *list)
 {
-
   Cell *current = list->first;
-
   while (current)
   {
     PrintTree(current->tree);
@@ -97,7 +86,7 @@ void PrintList(List *list)
 
 //=======================================================================//
 void DestructList(List *list){
-  
+
   if(list){
     Cell * current = list->first, *aux;
     while(current){
@@ -113,7 +102,6 @@ void DestructList(List *list){
 //=======================================================================//
 List *CreateHuffmanList(int *frequencyTable)
 {
-
   // Criando lista vazia
   List *list = CreateVoidList();
 
@@ -137,7 +125,6 @@ List *CreateHuffmanList(int *frequencyTable)
 //=======================================================================//
 List *Huffman_Execute(List *list)
 {
-
   // retorna null caso não exista a lista ou ela esteja vazia
   if (!list)
     return NULL;
@@ -167,7 +154,7 @@ List *Huffman_Execute(List *list)
 
       // inserindo a nova arvore na lista
       list = ListPush(list, newTree);
-      
+
       current = list->first;
     }
     else

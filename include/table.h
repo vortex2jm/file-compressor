@@ -18,7 +18,9 @@ unsigned char * ReadFile(unsigned char * fileWay, unsigned char ** table, long i
 
 unsigned char * EncodeText(unsigned char ** encodeTable, unsigned char * text, long int fileSize, long int * encodedTextSize);
 
-void CreateCompressedFile(unsigned char * text, unsigned char * name, int * frequencyTable, long int fileSize, long int encodedTextSize);
+void FillEncodeTable(unsigned char **table, Tree *tree, unsigned char *code, int treeHeight);
+
+void CreateCompressedFile(unsigned char * text, unsigned char * name, int * frequencyTable, long int encodedTextSize);
 
 void UnzipFile(FILE *compressedFile, List *list, unsigned char *fileName);
 
