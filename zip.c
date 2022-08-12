@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
   unsigned char **table = CreateEncodeTable(list);
 
   //Lendo o arquivo e salvando seus bytes em um vetor
-  unsigned char *text = ReadFile(argv[1], table, fileSize);
+  unsigned char *text = ReadFile(argv[1],fileSize);
   
   //Declarando variável para salvar o tamanho do vetor que comportará a stream codificada
   long int encodedTextSize = 0;

@@ -82,8 +82,7 @@ void DestructEncodeTable(unsigned char **table) {
 }
 
 //=======================================================================//
-unsigned char *ReadFile(unsigned char *fileWay, unsigned char **table,
-                        long int fileSize) {
+unsigned char *ReadFile(unsigned char *fileWay, long int fileSize) {
   FILE *file = fopen(fileWay, "rb");
 
   unsigned char *text = calloc(fileSize, sizeof(unsigned char));
