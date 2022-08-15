@@ -96,5 +96,3 @@ valgrindu:
 	@echo Running valgrind on $(NAME_UNZIP)
 	@echo $(RESET_COLOR)
 	@valgrind ./$(NAME_UNZIP) $(f)
-
-again: clean all zip
